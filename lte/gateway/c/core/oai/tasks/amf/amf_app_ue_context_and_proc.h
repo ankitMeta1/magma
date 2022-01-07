@@ -350,15 +350,13 @@ typedef struct amf_context_s {
 } amf_context_t;
 
 // Amf-Map Declarations:
-// Map- Key: uint64_t , Data: uint64_t
-typedef magma::map_s<uint64_t, uint64_t> map_uint64_uint64_t;
 // Map Key: guti_m5_t Data: uint64_t;
 typedef magma::map_s<guti_m5_t, uint64_t> map_guti_m5_uint64_t;
 
 typedef struct amf_ue_context_s {
-  map_uint64_uint64_t imsi_amf_ue_id_htbl;    // data is amf_ue_ngap_id_t
-  map_uint64_uint64_t tun11_ue_context_htbl;  // data is amf_ue_ngap_id_t
-  map_uint64_uint64_t
+  magma::map_uint64_uint64_t imsi_amf_ue_id_htbl;    // data is amf_ue_ngap_id_t
+  magma::map_uint64_uint64_t tun11_ue_context_htbl;  // data is amf_ue_ngap_id_t
+  magma::map_uint64_uint64_t
       gnb_ue_ngap_id_ue_context_htbl;  // data is amf_ue_ngap_id_t
   map_guti_m5_uint64_t guti_ue_context_htbl;
 } amf_ue_context_t;
@@ -860,8 +858,8 @@ void amf_ue_context_on_new_guti(
 ue_m5gmm_context_s* amf_ue_context_exists_guti(
     amf_ue_context_t* const amf_ue_context_p, const guti_m5_t* const guti_p);
 void ambr_calculation_pdu_session(
-    std::shared_ptr<smf_context_t> smf_context, uint64_t* dl_pdu_ambr,
-    uint64_t* ul_pdu_ambr);
+    uint16_t* dl_session_ambr, uint8_t* dl_ambr_unit, uint16_t* ul_session_ambr,
+    uint8_t* ul_ambr_unit, uint64_t* dl_pdu_ambr, uint64_t* ul_pdu_ambr);
 int amf_proc_registration_abort(
     amf_context_t* amf_ctx, struct ue_m5gmm_context_s* ue_amf_context);
 ue_m5gmm_context_s* ue_context_loopkup_by_guti(tmsi_t tmsi_rcv);
@@ -869,6 +867,9 @@ void ue_context_update_ue_id(
     ue_m5gmm_context_s* ue_context, amf_ue_ngap_id_t ue_id);
 ue_m5gmm_context_s* ue_context_lookup_by_gnb_ue_id(
     gnb_ue_ngap_id_t gnb_ue_ngap_id);
+int t3592_abort_handler(
+    ue_m5gmm_context_t* ue_context, std::shared_ptr<smf_context_t> smf_ctx,
+    uint8_t pdu_session_id);
 
 /* Fetch tmsi from ue id */
 tmsi_t amf_lookup_guti_by_ueid(amf_ue_ngap_id_t ue_id);
