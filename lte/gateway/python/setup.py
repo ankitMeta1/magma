@@ -91,6 +91,7 @@ setup(
         'load_tests/loadtest_sessiond.py',
         'load_tests/loadtest_pipelined.py',
         'load_tests/loadtest_mobilityd.py',
+        'load_tests/loadtest_subscriberdb.py',
     ],
     package_data={'magma.redirectd.templates': ['*.html']},
     install_requires=[
@@ -140,6 +141,7 @@ setup(
             'nose==1.3.7',
             'coverage',
             'iperf3',
+            'parameterized==0.8.1',
         ],
     },
 )
