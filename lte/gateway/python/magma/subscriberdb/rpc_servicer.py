@@ -124,7 +124,7 @@ class SubscriberDBRpcServicer(subscriberdb_pb2_grpc.SubscriberDBServicer):
         sid = SIDUtils.to_str(request)
         try:
             response = self._store.get_subscriber_data(sid)
-            # get_sub_profile converts the imsi id to a string prependend with IMSI,
+            # get_sub_profile converts the imsi id to a string prependend with IMSI string,
             # so strip the IMSI prefix in sid
             imsi = sid[4:]
             sub_profile = self._lte_processor.get_sub_profile(imsi)
